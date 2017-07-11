@@ -1,5 +1,7 @@
 package MyWebAPI_Package.resources;
 
+import MyWebAPI_Package.security.Token;
+import MyWebAPI_Package.security.TokenParam;
 import com.codahale.metrics.annotation.Timed;
 
 import javax.ws.rs.GET;
@@ -7,9 +9,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import io.dropwizard.auth.Auth;
-import javax.annotation.security.RolesAllowed;
-import MyWebAPI_Package.auth.User;
+
+import MyWebAPI_Package.core.User;
 
 
 @Path("/secret")
@@ -18,11 +19,12 @@ public class SecretResource {
       
     public SecretResource() { }
 
-    @RolesAllowed({ "ADMIN" })
     @GET
     @Timed
-    public Response sayHello(@Auth User user) {
+    public Response sayHello(@TokenParam Token token, User user) {
+
         Response r = Response.status(200).header(("X-TEST"), "secret").build();
+        final String name = user.getName();
         return r;
     }
 }

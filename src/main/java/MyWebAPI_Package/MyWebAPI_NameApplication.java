@@ -1,22 +1,16 @@
 package MyWebAPI_Package;
 
+import MyWebAPI_Package.core.User;
+import MyWebAPI_Package.security.TokenFactoryProvider;
+import MyWebAPI_Package.security.TokenFeature;
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthValueFactoryProvider;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
 import MyWebAPI_Package.health.NecoHealthCheck;
 import MyWebAPI_Package.resources.InfoResource;
 import MyWebAPI_Package.resources.SecretResource;
-
-import MyWebAPI_Package.auth.User;
-import MyWebAPI_Package.auth.UserAuthorizer;
-import MyWebAPI_Package.auth.UserAuthenticator;
-
-import io.dropwizard.auth.AuthDynamicFeature;
-import io.dropwizard.auth.AuthValueFactoryProvider;
-import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
-
-import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 
 public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfiguration> {
@@ -51,6 +45,7 @@ public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfigura
         environment.jersey().register(secretResource);
         
         // auth
+        /*
         environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<User>()
                                 .setAuthenticator(new UserAuthenticator())
                                 .setAuthorizer(new UserAuthorizer())
@@ -58,6 +53,8 @@ public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfigura
                                 .buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
+        */
+        environment.jersey().register(TokenFeature.class);
     }
 
 }
