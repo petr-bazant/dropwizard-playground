@@ -11,6 +11,7 @@ import io.dropwizard.setup.Environment;
 import MyWebAPI_Package.health.NecoHealthCheck;
 import MyWebAPI_Package.resources.InfoResource;
 import MyWebAPI_Package.resources.SecretResource;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 
 public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfiguration> {
@@ -54,6 +55,8 @@ public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfigura
         environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
         */
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
+        environment.jersey().register(new AuthValueFactoryProvider.Binder(User.class));
         environment.jersey().register(TokenFeature.class);
     }
 

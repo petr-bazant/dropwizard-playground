@@ -24,7 +24,6 @@ public class SecretResource {
     public Response sayHello(@TokenParam Token token, User user) {
 
         Response r = Response.status(200).header(("X-TEST"), "secret").build();
-        final String name = user.getName();
         return r;
     }
 }
