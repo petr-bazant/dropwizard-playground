@@ -1,10 +1,14 @@
 package MyWebAPI_Package;
 
 import MyWebAPI_Package.core.User;
+import MyWebAPI_Package.security.SuperAuthenticator;
+import MyWebAPI_Package.security.SuperAuthorizer;
 import MyWebAPI_Package.security.TokenFactoryProvider;
 import MyWebAPI_Package.security.TokenFeature;
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.AuthValueFactoryProvider;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 
@@ -46,18 +50,16 @@ public class MyWebAPI_NameApplication extends Application<MyWebAPI_NameConfigura
         environment.jersey().register(secretResource);
         
         // auth
-        /*
-        environment.jersey().register(new AuthDynamicFeature(new BasicCredentialAuthFilter.Builder<User>()
-                                .setAuthenticator(new UserAuthenticator())
-                                .setAuthorizer(new UserAuthorizer())
-                                .setRealm("BASIC-AUTH-REALM")
-                                .buildAuthFilter()));
+        //environment.jersey().register(TokenFeature.class);
+        environment.jersey().register(new AuthDynamicFeature(
+                new BasicCredentialAuthFilter.Builder<User>()
+                        .setAuthenticator(new SuperAuthenticator())
+                        .setAuthorizer(new SuperAuthorizer())
+                        .setRealm("SUPER SECRET STUFF")
+                        .buildAuthFilter()));
         environment.jersey().register(RolesAllowedDynamicFeature.class);
+        //If you want to use @Auth to inject a custom Principal type into your resource
         environment.jersey().register(new AuthValueFactoryProvider.Binder<>(User.class));
-        */
-        environment.jersey().register(RolesAllowedDynamicFeature.class);
-        environment.jersey().register(new AuthValueFactoryProvider.Binder(User.class));
-        environment.jersey().register(TokenFeature.class);
     }
 
 }

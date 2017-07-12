@@ -1,6 +1,7 @@
 package MyWebAPI_Package.security;
 
 import javax.inject.Inject;
+
 import org.glassfish.hk2.api.Factory;
 import org.glassfish.hk2.api.ServiceLocator;
 import org.glassfish.jersey.server.internal.inject.AbstractValueFactoryProvider;
@@ -24,7 +25,7 @@ public class TokenFactoryProvider extends AbstractValueFactoryProvider {
     @Override
     protected Factory<?> createValueFactory(Parameter parameter) {
         Class<?> paramType = parameter.getRawType();
-        TokenParam annotation = parameter.getAnnotation(TokenParam.class);
+        CustomAuth annotation = parameter.getAnnotation(CustomAuth.class);
         if (annotation != null && paramType.isAssignableFrom(Token.class)) {
             return tokenFactory;
         }

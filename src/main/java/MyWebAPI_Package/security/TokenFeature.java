@@ -24,7 +24,7 @@ public class TokenFeature implements Feature {
                         .to(ValueFactoryProvider.class)
                         .in(Singleton.class);
                 bind(TokenParamInjectionResolver.class)
-                        .to(new TypeLiteral<InjectionResolver<TokenParam>>(){})
+                        .to(new TypeLiteral<InjectionResolver<CustomAuth>>(){})
                         .in(Singleton.class);
             }
         });
