@@ -24,9 +24,9 @@ public class SecretResource {
 
     @GET
     @Timed
-    public Response sayHello(/*@Auth User user*/ @Context SecurityContext context) {
+    public Response sayHello(@Auth User user /*@Context SecurityContext context*/) {
 
-        Response r = Response.status(200).header(("X-TEST"), "secret").build();
+        Response r = Response.status(200).header(("X-TEST"), user.getName()).build();
         return r;
     }
 }

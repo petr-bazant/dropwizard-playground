@@ -8,7 +8,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-
+import MyWebAPI_Package.core.App;
+import io.dropwizard.auth.Auth;
 
 @Path("/info")
 @Produces(MediaType.APPLICATION_JSON)
@@ -22,8 +23,8 @@ public class InfoResource {
 
     @GET
     @Timed
-    public Response sayHello() {
-        Response r = Response.status(200).header(("X-TEST"), "test " + this.verze).build();
+    public Response sayHello(@Auth App app) {
+        Response r = Response.status(200).header(("X-TEST"), "verze: " + this.verze + ", app: " + app.getName()).build();
         return r;
     }
 }
